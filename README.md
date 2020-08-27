@@ -10,7 +10,7 @@ In Fortran90 for the best experience
 Obviously, no split for parsing, more pleasure :)
 
 ## Features
-- Only one file with 345 of pure fortran
+- Only one file with 379 of pure fortran
 - Extreme code bloating
 - Made in 1 hour
 - Handles natural form and parsing errors

@@ -7,6 +7,7 @@ $(NAME):
 
 clean:
 	rm -f $(NAME)
+	rm -f lidl.mod
 
 fclean: clean
 

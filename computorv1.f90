@@ -1,4 +1,38 @@
+! Sqrt function using binary search
+MODULE lidl
+	IMPLICIT NONE
+	
+	CONTAINS
+	FUNCTION my_sqrt(n) RESULT(mid)
+
+		INTEGER :: accuracy
+		INTEGER :: i
+		REAL, intent(in) :: n
+		REAL :: lo
+		REAL :: hi
+		REAL :: mid
+
+		lo = 0
+		mid = 0
+		hi = n
+		accuracy = 100
+		DO i = 1, accuracy
+			mid = (lo + hi) / 2
+			IF (mid * mid == n) THEN
+				RETURN
+			END IF
+			IF (mid * mid > n) THEN
+				hi = mid
+			ELSE
+				lo = mid
+			END IF
+		END DO
+		RETURN
+	END FUNCTION
+END MODULE
+
 PROGRAM computorv1
+	USE lidl
 	! Arg variables
 	CHARACTER(len=:), ALLOCATABLE :: arg
 	INTEGER :: arglen
@@ -328,14 +362,14 @@ PROGRAM computorv1
 			! real part
 			k(0) = -polynome(1) / (2 * polynome(2));
 			! imaginary part
-			c(0) = SQRT(-delta) / (2 * polynome(2));
-			c(1) = -SQRT(-delta) / (2 * polynome(2));
+			c(0) = my_sqrt(-delta) / (2 * polynome(2));
+			c(1) = -my_sqrt(-delta) / (2 * polynome(2));
 			PRINT *, "Solutions: Negative discriminant, 2 complex solutions"
 			PRINT *, "X1 = ", k(0), " + ", c(0), "i" 
 			PRINT *, "X2 = ", k(0), " + ", c(1), "i" 
 		ELSE
-			k(0) = (-polynome(1) + SQRT(delta)) / (2 * polynome(2));
-			k(1) = (-polynome(1) - SQRT(delta)) / (2 * polynome(2));
+			k(0) = (-polynome(1) + my_sqrt(delta)) / (2 * polynome(2));
+			k(1) = (-polynome(1) - my_sqrt(delta)) / (2 * polynome(2));
 			PRINT *, "Solutions: Positive discriminant, 2 real solutions"
 			PRINT *, "X1 = ", k(0)
 			PRINT *, "X2 = ", k(1)
