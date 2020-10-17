@@ -17,8 +17,9 @@ Obviously, no split for parsing, more pleasure :)
 ## Features
 - Only one file with 398 lines of pure fortran
 - Extreme code bloating
-- Made in 1 hour
+- Made in 1 hour for the 1.0
 - Handles natural form and parsing errors
+- Displays calculation steps for every case
 - Not in python
 - Not in C
 - Makefile from LIDL
