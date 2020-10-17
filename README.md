@@ -2,6 +2,11 @@
 
 In Fortran90 for the best experience
 
+## Upfront note (Important)
+This project was (obviously) meant to be a joke, as some of my other 42 projects.
+The code here was purposely made to look dirty and to feel unreadable, despite the flexibility and the stability of the program itself.
+Being able to do 42 projects using incongruous languages or odd ergonomy and getting full score in them by fitting all the mandatory subject points is something pretty challenging and something I personally especially enjoy.
+
 ## Why in Fortran ?
 - Like the boomers said, "It was better before"
 - Like a wise viking said, "A true warrior doesn't need a sword"
@@ -10,7 +15,7 @@ In Fortran90 for the best experience
 Obviously, no split for parsing, more pleasure :)
 
 ## Features
-- Only one file with 398 of pure fortran
+- Only one file with 398 lines of pure fortran
 - Extreme code bloating
 - Made in 1 hour
 - Handles natural form and parsing errors
