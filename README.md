@@ -10,7 +10,7 @@ In Fortran90 for the best experience
 Obviously, no split for parsing, more pleasure :)
 
 ## Features
-- Only one file with 379 of pure fortran
+- Only one file with 398 of pure fortran
 - Extreme code bloating
 - Made in 1 hour
 - Handles natural form and parsing errors
@@ -24,5 +24,5 @@ Obviously, no split for parsing, more pleasure :)
 - If you push it on the vogsphere I will give you a -42 in person :)
 
 ## Issues
-- Don't display degrees over 9 (Obviously, you want to resolve 2nd degree equations, no need of X^50)
-- `2X^2+X^15=` reads the equations like `2 * X^2 + X^1 + 5 = 0`
+- Triggers a parsing error if degrees over 9 (Obviously, you want to resolve 2nd degree equations, no need of X^50)
+- Treats `X 5 = 2` as `X + 5 = 2`
