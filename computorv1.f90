@@ -270,6 +270,15 @@ PROGRAM computorv1
 					polynome(degree) = polynome(degree) + nb
 					mode = 5
 					t = 3
+					! Handle >= 10 degree
+					IF (i + 3 <= arglen) THEN
+						IF ((arg(i+3:i+3) >= "0" .AND. arg(i+3:i+3) <= "9")) THEN
+							PRINT *, "Error : [", arg(i+2:i+3), "] - Degree containing more than one digit (Mode 4)"
+							DEALLOCATE(arg)
+							DEALLOCATE(copy)
+							CALL EXIT(1)
+						END IF
+					END IF
 				ELSE IF (arg(i+1:i+1) /= "^") THEN
 					polynome(1) = polynome(1) + nb
 					mode = 0
@@ -326,7 +335,7 @@ PROGRAM computorv1
 			WRITE (tmp, '(I8)')i
 			IF (i /= 0) THEN
 				IF (i == 1) THEN
-					PRINT *, polynome(i), " ", "X"
+					PRINT *, polynome(i), " ", "X", " +"
 				ELSE
 					PRINT *, polynome(i), " ", "X^", TRIM(ADJUSTL(TRIM(tmp))), " +"
 				END IF
@@ -349,30 +358,40 @@ PROGRAM computorv1
 			PRINT *, "Solutions: None"
 		END IF
 	ELSE IF (psize == 1) THEN
-		k(0) = polynome(0) / polynome(1) ! x = b/a with ax + b = 0
+		k(0) = -polynome(0) / polynome(1) ! x = -b/a with ax + b = 0
 		PRINT *, "Solutions: 1 real solution"
-		PRINT *, "X = ", k(0)
+		PRINT *, "Step 1 : [ax = -b] : ", polynome(1), "X = -1 * ", polynome(0)
+		PRINT *, "Step 2 : [x = -b/a] : ", "X = -1 * ", polynome(0), " / ", polynome(1) 
+		PRINT *, "Solution : X = ", k(0)
 	ELSE IF (psize == 2) THEN
 		delta = polynome(1) * polynome(1) - 4 * polynome(2) * polynome(0) ! (-b)² - 4ac with ax² + bx + c = 0
+		PRINT *, "Discriminant : [delta = b^2 - 4ac] : DELTA = ", polynome(1), "^2 - 4 * ", polynome(2), " * ", polynome(0)
+		PRINT *, "DELTA = ", delta
 		IF (delta == 0) THEN
 			k(0) = -polynome(1) / (2 * polynome(2));
-			PRINT *, "Solutions: Null discriminant, 1 real solution"
-			PRINT *, "X = ", k(0)
+			PRINT *, "> Null discriminant, 1 real solution"
+			PRINT *, "Step 1 : [x = -b/2a] : ", "X = -1 * ", polynome(1), " / (2 * ", polynome(2), ")"
+			PRINT *, "Solution : X = ", k(0)
 		ELSE IF (delta < 0) THEN
 			! real part
 			k(0) = -polynome(1) / (2 * polynome(2));
 			! imaginary part
 			c(0) = my_sqrt(-delta) / (2 * polynome(2));
 			c(1) = -my_sqrt(-delta) / (2 * polynome(2));
-			PRINT *, "Solutions: Negative discriminant, 2 complex solutions"
-			PRINT *, "X1 = ", k(0), " + ", c(0), "i" 
-			PRINT *, "X2 = ", k(0), " + ", c(1), "i" 
+			PRINT *, "> Negative discriminant, 2 complex solutions"
+			PRINT *, "Real part : [xr = -b/2a] : ", "XR = -1 * ", polynome(1), " / (2 * ", polynome(2), ")"
+			PRINT *, "Imaginary part 1 : [xi1 = sqrt(-delta) / 2a] : XI1 = SQRT(-1 * ", delta, ") / 2 *", polynome(2)
+			PRINT *, "Imaginary part 2 : [xi2 = -sqrt(-delta) / 2a] : XI2 = -SQRT(-1 * ", delta, ") / 2 *", polynome(2)
+			PRINT *, "Solution 1 : X1 = ", k(0), " + ", c(0), "i" 
+			PRINT *, "Solution 2 : X2 = ", k(0), " + ", c(1), "i" 
 		ELSE
 			k(0) = (-polynome(1) + my_sqrt(delta)) / (2 * polynome(2));
 			k(1) = (-polynome(1) - my_sqrt(delta)) / (2 * polynome(2));
-			PRINT *, "Solutions: Positive discriminant, 2 real solutions"
-			PRINT *, "X1 = ", k(0)
-			PRINT *, "X2 = ", k(1)
+			PRINT *, "> Positive discriminant, 2 real solutions"
+			PRINT *, "Formula 1 : [(-b + sqrt(delta)) / 2a] : X1 = (-1 * ", polynome(1), " + SQRT(", delta, ")) / 2 * ", polynome(2)
+			PRINT *, "Formula 2 : [(-b - sqrt(delta)) / 2a] : X2 = (-1 * ", polynome(1), " - SQRT(", delta, ")) / 2 * ", polynome(2)
+			PRINT *, "Solution 1 : X1 = ", k(0)
+			PRINT *, "Solution 2 : X2 = ", k(1)
 		END IF
 	END IF
 
